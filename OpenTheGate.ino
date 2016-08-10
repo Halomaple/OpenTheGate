@@ -30,7 +30,7 @@ void loop()
       }
     }
     client.stop();  
-    delay(15000);          //make sure the door stays opened before people get out
+    delay(10);
     digitalWrite(6, LOW);  //close the door
   }
 }
