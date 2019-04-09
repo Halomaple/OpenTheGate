@@ -8,11 +8,10 @@ void setup() {
   if (Ethernet.begin(mac) == 0) { // start ethernet using mac & DHCP
     Serial.println("Failed to configure Ethernet using DHCP");
   }
-  delay(1000); // give the Ethernet shield a second to initialize
+  delay(2000); // give the Ethernet shield a second to initialize
   server.begin();
   Serial.print("This IP address: ");
-  IPAddress myIPAddress = Ethernet.localIP();
-  Serial.print(myIPAddress);
+  Serial.print(Ethernet.localIP());
   pinMode(6, OUTPUT);
 }
 
@@ -22,15 +21,19 @@ void loop()
   if (client) {
     if (client.connected()) {
       if (client.available()) {
+        delay(100);
         digitalWrite(6, HIGH);  //open the door
         client.println("HTTP/1.1 200 OK");
         client.println("Content-Type: text/html");
         client.println();
-        client.print("<h1>Door is opened</h1>");//return this message to web page
+        client.println("<!DOCTYPE html><html><head>");
+        client.println("<link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAMSURBVBhXY/j//z8ABf4C/qc1gYQAAAAASUVORK5CYII=\"/>");
+        client.println("<link rel=\"apple-touch-icon\" href=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAMSURBVBhXY/j//z8ABf4C/qc1gYQAAAAASUVORK5CYII=\">");
+        client.println("</head><body><h1>Door is opened.</h1></body></html>");
       }
     }
-    client.stop();  
-    delay(10);
+    client.stop();
+    delay(100);
     digitalWrite(6, LOW);  //close the door
   }
 }
