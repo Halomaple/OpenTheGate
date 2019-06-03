@@ -1,7 +1,7 @@
 #include <SPI.h>
 #include <Ethernet.h>
 
-byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
+byte mac[] = { 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA };
 EthernetServer server(80);
 void setup() {
   Serial.begin(9600);
@@ -12,6 +12,7 @@ void setup() {
   server.begin();
   Serial.print("This IP address: ");
   Serial.print(Ethernet.localIP());
+  delay(2000);
   pinMode(6, OUTPUT);
 }
 
@@ -26,10 +27,7 @@ void loop()
         client.println("HTTP/1.1 200 OK");
         client.println("Content-Type: text/html");
         client.println();
-        client.println("<!DOCTYPE html><html><head>");
-        client.println("<link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAMSURBVBhXY/j//z8ABf4C/qc1gYQAAAAASUVORK5CYII=\"/>");
-        client.println("<link rel=\"apple-touch-icon\" href=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAMSURBVBhXY/j//z8ABf4C/qc1gYQAAAAASUVORK5CYII=\">");
-        client.println("</head><body><h1>Door is opened.</h1></body></html>");
+        client.println("<!DOCTYPE html><html><head></head><body><h1>Door is opened.</h1></body></html>");
       }
     }
     client.stop();
